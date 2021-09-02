@@ -1,14 +1,14 @@
 import React from 'react';
 
-const Bookmark = ({status, toggleBookmark, id}) => {
+const Bookmark = ({status, ...rest}) => {
 	let cl = 'bi bi-bookmark'
-	if (status) {
-		cl += '-fill'
-	}
+	status === true ? cl = `${cl}-fill` : cl = `${cl}`
 	return (
-		<button key={id} className="btn" onClick={() => toggleBookmark(id)}>
-			<i className={cl}/>
-		</button>
+		<div>
+			<button onClick={() => {rest.onToggle(rest.userId)}} className="btn">
+				<i className={cl}/>
+			</button>
+		</div>
 	);
 };
 
