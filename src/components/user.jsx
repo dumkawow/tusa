@@ -1,45 +1,71 @@
-import React from 'react';
-import Qualitie from "./qualitie";
-import Bookmark from "./bookmark";
+import React from 'react'
+import Quality from './qualitie'
+import Bookmark from './bookmark'
+import PropTypes from 'prop-types'
 
-const User = ({users, onDelete, onToggle}) => {
-	return (
-		<>
-			{users.map(user => {
-				return <tr key={user._id}>
-					<td>{user.name}</td>
-					<td>
-						{user.qualities.map(q => {
-							return <Qualitie
-								key={q._id}
-								name={q.name}
-								color={q.color}
-								id={q._id}
-							/>
-						})
-						}
-					
-					</td>
-					<td>{user.profession.name}</td>
-					<td>{user.completedMeetings}</td>
-					<td>{user.rate}</td>
-					<td>
-						<Bookmark
-							onToggle={onToggle}
-							userId={user._id}
-							status={user.status}
-						/>
-					</td>
-					<td>
-						{<button
-							onClick={() => onDelete(user._id)}
-							className="btn btn-danger"> delete </button>}
-					</td>
-				
-				</tr>
-			})}
-		</>
-	);
-};
+const User = ({
+    _id,
+    name,
+    qualities,
+    profession,
+    completedMeetings,
+    rate,
+    status,
+    onDelete,
+    onToggle
+}) => {
+    return (
+        <>
+            <tr key={_id}>
+                <td>{name}</td>
+                <td>
+                    {qualities.map((q) => {
+                        return (
+                            <Quality
+                                key={q._id}
+                                name={q.name}
+                                color={q.color}
+                                id={q._id}
+                            />
+                        )
+                    })}
+                </td>
+                <td>{profession.name}</td>
+                <td>{completedMeetings}</td>
+                <td>{rate}</td>
+                <td>
+                    <Bookmark
+                        onToggle={onToggle}
+                        userId={_id}
+                        status={status}
+                    />
+                </td>
+                <td>
+                    {
+                        <button
+                            onClick={() => onDelete(_id)}
+                            className="btn btn-danger"
+                        >
+                            {' '}
+                            delete{' '}
+                        </button>
+                    }
+                </td>
+            </tr>
+        </>
+    )
+}
 
-export default User;
+User.propTypes = {
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    qualities: PropTypes.array.isRequired,
+    profession: PropTypes.object.isRequired,
+    completedMeetings: PropTypes.number.isRequired,
+    rate: PropTypes.number.isRequired,
+    status: PropTypes.string,
+    onDelete: PropTypes.func.isRequired,
+    onToggle: PropTypes.func.isRequired
+}
+
+export default User
