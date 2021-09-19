@@ -13,9 +13,11 @@ module.exports = {
   },
   plugins: ["react"],
   rules: {
-    indent: ["error", 4],
+    indent: "off",
+    "no-tabs": "off",
     "space-before-function-paren": ["error", "never"],
     quotes: ["error", "single", { avoidEscape: false }],
+    "no-mixed-spaces-and-tabs": 0,
     "object-curly-spacing": ["error", "always", { objectsInObjects: false }],
   },
 };
