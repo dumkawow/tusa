@@ -3,16 +3,17 @@ import SearchStatus from './searchStatus'
 import { paginate } from '../utils/paginate'
 import api from '../api'
 import GroupList from './groupList'
-import User from './user'
 import Pagination from './pagination'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
+import UsersTable from './usersTable'
 
 const Users = ({ users: allUsers, ...rest }) => {
 	const [currentPage, setCurrentPage] = useState(1)
 	const [professions, setProfession] = useState()
 	const [selectedProf, setSelectedProf] = useState()
-	const pageSize = 4
+	const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' })
+	const pageSize = 16
 	useEffect(() => {
 		api.professions.fetchAll().then((data) => {
 			setProfession(data)
@@ -28,13 +29,17 @@ const Users = ({ users: allUsers, ...rest }) => {
 	const handleProfessionSelect = (item) => {
 		setSelectedProf(item)
 	}
+	const handleSort = (item) => {
+		setSortBy(item)
+	}
 	const filteredUsers = selectedProf
 		? allUsers.filter((user) => {
 			return _.isEqual(user.profession, selectedProf)
 		})
 		: allUsers
 	const count = filteredUsers.length
-	const users = paginate(filteredUsers, currentPage, pageSize)
+	const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order])
+	const users = paginate(sortedUsers, currentPage, pageSize)
 	const clearFilter = () => {
 		setSelectedProf(undefined)
 	}
@@ -58,24 +63,8 @@ const Users = ({ users: allUsers, ...rest }) => {
 			<div className="d-flex flex-column">
 				<SearchStatus length={count}/>
 				{count > 0 && (
-					<table className="table">
-						<thead>
-						<tr>
-							<th scope="col">Имя</th>
-							<th scope="col">Качества</th>
-							<th scope="col">Профессия</th>
-							<th scope="col">Встретился, раз</th>
-							<th scope="col">Оценка</th>
-							<th scope="col">Избранное</th>
-							<th/>
-						</tr>
-						</thead>
-						<tbody>
-						{users.map((user) => (
-							<User key={user._id} {...user} {...rest} />
-						))}
-						</tbody>
-					</table>
+					<UsersTable users={users} onSort={handleSort} {...rest}
+					            selectedSort={sortBy}/>
 				)}
 				<div className="d-flex justify-content-center">
 					<Pagination
