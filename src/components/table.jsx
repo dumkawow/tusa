@@ -6,7 +6,6 @@ import TableBody from './tableBody'
 const Table = ({ onSort, selectedSort, columns, data, children }) => {
 	return (
 		<table className="table">
-			{console.log(children[0], 'children')}
 			{children || (
 				<>
 					<TableHeader {...{ onSort, selectedSort, columns }}/>

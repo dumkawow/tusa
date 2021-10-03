@@ -8,6 +8,7 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
 				return <i className="bi bi-caret-down-fill"/>
 			} else return <i className="bi bi-caret-up-fill"/>
 		}
+		return null
 	}
 
 	const handleSort = (item) => {
@@ -31,11 +32,11 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
 					: undefined}
 				{...{ role: columns[column].path && 'button' }}
 			>
-				{columns[column].name} {}
-				{column !== 'qualities' && column !== 'delete'
-					? renderSortArrow(selectedSort,
-						columns[column].path)
-					: undefined}
+				{columns[column].name} {column !== 'qualities' && column !==
+			'delete'
+				? renderSortArrow(selectedSort,
+					columns[column].path)
+				: undefined}
 			</th>
 		))}
 	</tr>

@@ -18,7 +18,6 @@ const Users = () => {
 	useEffect(() => {
 		api.users.default.fetchAll().then((data) => setUsers(data))
 	}, [])
-
 	const handleDelete = (userId) => {
 		setUsers(users.filter((user) => user._id !== userId))
 	}
@@ -42,6 +41,7 @@ const Users = () => {
 	useEffect(() => {
 		setCurrentPage(1)
 	}, [selectedProf])
+
 	const handleChangePage = (pageIndex) => {
 		setCurrentPage(pageIndex)
 	}
