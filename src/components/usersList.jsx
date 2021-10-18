@@ -8,15 +8,15 @@ import _ from 'lodash'
 import UsersTable from './usersTable'
 import { paginate } from '../utils/paginate'
 
-const Users = () => {
+const UsersList = () => {
 	const [currentPage, setCurrentPage] = useState(1)
 	const [professions, setProfession] = useState()
 	const [selectedProf, setSelectedProf] = useState()
 	const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' })
 	const pageSize = 16
-	const [users, setUsers] = useState(api.users.default.fetchAll())
+	const [users, setUsers] = useState('')
 	useEffect(() => {
-		api.users.default.fetchAll().then((data) => setUsers(data))
+		api.users.fetchAll().then((data) => setUsers(data))
 	}, [])
 	const handleDelete = (userId) => {
 		setUsers(users.filter((user) => user._id !== userId))
@@ -65,8 +65,10 @@ const Users = () => {
 		const clearFilter = () => {
 			setSelectedProf(undefined)
 		}
+
 		return (
 			<div className="d-flex">
+
 				{professions && (
 					<div className="d-flex flex-column flex-shrink-0 p-2">
 						<GroupList
@@ -83,15 +85,19 @@ const Users = () => {
 				)}
 
 				<div className="d-flex flex-column">
+
 					<SearchStatus length={count}/>
 					{count > 0 && (
 						<UsersTable users={usersCrop}
 						            onSort={handleSort}
 						            onDelete={handleDelete}
 						            selectedSort={sortBy}
-						            onToggle={handleToggleBookmark}/>
+						            onToggle={handleToggleBookmark}
+						            resetUsers={clearFilter}
+						/>
 					)}
 					<div className="d-flex justify-content-center">
+
 						<Pagination
 							itemsCount={count}
 							pageSize={pageSize}
@@ -105,8 +111,8 @@ const Users = () => {
 	}
 	return 'loading'
 }
-Users.propTypes = {
-	users: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
+UsersList.propTypes = {
+	usersList: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
 }
 
-export default Users
+export default UsersList

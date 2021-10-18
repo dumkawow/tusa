@@ -1,23 +1,19 @@
 import React from 'react'
-import Main from './components/main'
-import { Route, Switch } from 'react-router-dom'
-import Users from './components/users'
-import Login from './components/login'
-import UserPage from './components/userPage'
-import api from './api/fake.api/user.api'
+import { Redirect, Route, Switch } from 'react-router-dom'
+import Main from './layouts/main'
+import Login from './layouts/login'
+import NavBar from './components/navBar'
+import Users from './layouts/users'
 
 const App = () => {
-	const id = api.getById()
-	console.log(id)
-	// const path = () => id.then(data => data._id)
-
 	return (
 		<>
-			<Main/>
+			<NavBar/>
 			<Switch>
-				<Route path="/users" exact component={Users}/>
-				<Route path="/users/:userId?" component={UserPage}/>
+				<Route path="/users/:userId?" exact component={Users}/>
 				<Route path="/login" component={Login}/>
+				<Route path="/" exact component={Main}/>
+				<Redirect to="/"/>
 			</Switch>
 		</>
 	)
