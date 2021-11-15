@@ -5,11 +5,8 @@ const Bookmark = ({ status, ...rest }) => {
 	let cl = 'bi bi-bookmark'
 	status ? (cl = `${cl}-fill`) : (cl = `${cl}`)
 	return (
-		<button
-			{...rest}
-			className="btn"
-		>
-			<i className={cl}/>
+		<button {...rest} className="btn">
+			<i className={cl} />
 		</button>
 	)
 }

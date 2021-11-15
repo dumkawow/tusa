@@ -5,13 +5,13 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
 	const renderSortArrow = (selectedSort, curPath) => {
 		if (selectedSort.path === curPath) {
 			if (selectedSort.order === 'asc') {
-				return <i className="bi bi-caret-down-fill"/>
-			} else return <i className="bi bi-caret-up-fill"/>
+				return <i className="bi bi-caret-down-fill" />
+			} else return <i className="bi bi-caret-up-fill" />
 		}
 		return null
 	}
 
-	const handleSort = (item) => {
+	const handleSort = item => {
 		if (selectedSort.path === item) {
 			onSort({
 				...selectedSort,
@@ -21,26 +21,24 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
 			onSort({ path: item, order: 'asc' })
 		}
 	}
-	return (<thead>
-	<tr>
-		{Object.keys(columns).map((column) => (
-			<th
-				key={column}
-				onClick={columns[column].path
-					? () => handleSort(
-						columns[column].path)
-					: undefined}
-				{...{ role: columns[column].path && 'button' }}
-			>
-				{columns[column].name} {column !== 'qualities' && column !==
-			'delete'
-				? renderSortArrow(selectedSort,
-					columns[column].path)
-				: undefined}
-			</th>
-		))}
-	</tr>
-	</thead>)
+	return (
+		<thead>
+			<tr>
+				{Object.keys(columns).map(column => (
+					<th
+						key={column}
+						onClick={columns[column].path ? () => handleSort(columns[column].path) : undefined}
+						{...{ role: columns[column].path && 'button' }}
+					>
+						{columns[column].name}{' '}
+						{column !== 'qualities' && column !== 'delete'
+							? renderSortArrow(selectedSort, columns[column].path)
+							: undefined}
+					</th>
+				))}
+			</tr>
+		</thead>
+	)
 }
 
 TableHeader.propTypes = {
